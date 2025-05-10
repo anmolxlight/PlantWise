@@ -3,11 +3,18 @@ from flask_cors import CORS
 import requests
 import re
 import json
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 
-GEMINI_API_KEY = 'AIzaSyB0-aeyiJ5qEygH0FB4uDV3I-MPWUzCDog'
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+if not GEMINI_API_KEY:
+    raise ValueError("GEMINI_API_KEY environment variable is not set. Please create a .env file by copying env.example or refer to README.md for setup instructions.")
 GEMINI_URL = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}'
 
 def get_ai_response(prompt):
