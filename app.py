@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)
 
 GEMINI_API_KEY = 'AIzaSyB0-aeyiJ5qEygH0FB4uDV3I-MPWUzCDog'
-GEMINI_URL = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={GEMINI_API_KEY}'
+GEMINI_URL = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_API_KEY}'
 
 def get_ai_response(prompt):
     headers = {
@@ -26,9 +26,14 @@ def get_ai_response(prompt):
     try:
         response = requests.post(GEMINI_URL, headers=headers, data=json.dumps(data))
         result = response.json()
-        return result['candidates'][0]['content']['parts'][0]['text'].strip()
+        if 'candidates' in result:
+            return result['candidates'][0]['content']['parts'][0]['text'].strip()
+        elif 'error' in result:
+            return f"Gemini API error: {result['error'].get('message', 'Unknown error')}"
+        else:
+            return f"Unexpected response structure: {result}"
     except Exception as e:
-        return f"An error occurred: {e}"
+        return f"An exception occurred: {str(e)}"
 
 def clean_input(user_input):
     user_input = re.sub(r'[^a-zA-Z, ]', '', user_input).lower().strip()
