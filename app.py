@@ -4,7 +4,7 @@ import requests
 import re
 import json
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 
 # Load environment variables from .env file
 load_dotenv()
