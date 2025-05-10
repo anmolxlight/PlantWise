@@ -3,7 +3,7 @@
 ## About
 PlantWise is an AI-powered application developed as a module for Smart India Hackathon (SIH) 2024. This tool helps users identify potential natural remedies for various health symptoms based on traditional herbal and Ayurvedic medicine knowledge.
 
-**Website:** https://sites.google.com/view/plantwise/virtual-garden
+**Website:** [https://sites.google.com/view/plantwise/virtual-garden](https://sites.google.com/view/plantwise/vitrual-garden?authuser=0)
 
 The application processes user-reported symptoms, analyzes them using AI, and provides tailored plant-based remedy suggestions while also warning about things to avoid for the identified health conditions.
 
