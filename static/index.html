@@ -22,10 +22,12 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for theme change */
         }
 
         /* Container for the Form */
         .container {
+            position: relative; /* For positioning the toggle button */
             background-color: #ffffff;
             padding: 30px;
             border-radius: 8px;
@@ -120,15 +122,128 @@
 
         /* Responsive Design */
         @media only screen and (max-width: 768px) {
-            body { padding: 20px; }
-            h1 { font-size: 1.8em; }
-            button { width: 100%; padding: 15px; }
+            body { 
+                padding: 20px; 
+            }
+            .container {
+                padding: 20px; /* Adjusted padding for smaller screens */
+            }
+            h1 { 
+                font-size: 1.8em; 
+            }
+            label {
+                font-size: 1em; /* Adjusted font size for labels */
+            }
+            textarea {
+                font-size: 15px; /* Adjusted font size for textarea */
+                min-height: 100px; /* Ensure textarea doesn't get too small */
+            }
+            button { 
+                width: 100%; 
+                padding: 15px; 
+                font-size: 1em; /* Adjusted font size for button */
+            }
+            .response {
+                padding: 15px; /* Adjusted padding for response box */
+                font-size: 0.95em; /* Adjusted font size for response text */
+            }
+            .response strong {
+                font-size: 1.1em; /* Adjusted font size for strong tags in response */
+            }
         }
+
+        /* Additional adjustments for very small screens */
+        @media only screen and (max-width: 480px) {
+            body {
+                padding: 15px; /* Further reduce body padding */
+            }
+            .container {
+                padding: 15px; /* Further reduce container padding */
+            }
+            h1 {
+                font-size: 1.6em; /* Further reduce heading font size */
+            }
+            textarea {
+                font-size: 14px; /* Further reduce textarea font size */
+                min-height: 80px; /* Adjust min-height for very small screens */
+            }
+            button {
+                padding: 12px; /* Adjust button padding */
+                font-size: 0.95em; /* Adjust button font size */
+            }
+            .response {
+                padding: 10px; /* Further reduce response box padding */
+                font-size: 0.9em; /* Further reduce response text font size */
+            }
+            .response strong {
+                font-size: 1em; /* Adjust strong tag font size in response */
+            }
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .dark-mode .container {
+            background-color: #1e1e1e;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Darker shadow */
+        }
+        .dark-mode h1 {
+            color: #1976d2; /* A lighter, vibrant color for heading in dark mode */
+        }
+        .dark-mode label {
+            color: #b0b0b0;
+        }
+        .dark-mode textarea {
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            border-color: #555;
+        }
+        .dark-mode textarea:focus {
+            border-color: #1976d2;
+        }
+        .dark-mode button#submit-btn { /* More specific selector for submit button */
+            background-color: #1976d2;
+            color: white;
+        }
+        .dark-mode button#submit-btn:hover {
+            background-color: #155a9e;
+        }
+        .dark-mode .response {
+            background-color: #2c2c2c;
+            border-left-color: #1976d2;
+            color: #e0e0e0;
+        }
+        .dark-mode .response strong {
+            color: #64b5f6; /* Lighter shade for strong tags */
+        }
+        
+        /* Dark Mode Toggle Button Styling */
+        #dark-mode-toggle {
+            position: absolute;
+            top: 20px; /* Adjusted for better spacing */
+            right: 20px; /* Adjusted for better spacing */
+            padding: 8px 12px;
+            background-color: #004d40; 
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            z-index: 1000; /* Ensure it's above other elements */
+        }
+        .dark-mode #dark-mode-toggle {
+            background-color: #555; 
+            color: #e0e0e0;
+        }
+
     </style>
 </head>
 <body>
 
     <div class="container">
+        <button id="dark-mode-toggle">Dark Mode</button>
         <h1>Herbal Remedy Assistant</h1>
 
         <label for="symptoms">Enter your symptoms (comma-separated):</label>
@@ -142,6 +257,57 @@
 
     <script>
         $(document).ready(function() {
+            const darkModeToggle = $('#dark-mode-toggle');
+            const body = $('body');
+
+            // Function to apply theme based on preference
+            function applyTheme(theme) {
+                if (theme === 'dark') {
+                    body.addClass('dark-mode');
+                    darkModeToggle.text('Light Mode'); // Change button text
+                } else {
+                    body.removeClass('dark-mode');
+                    darkModeToggle.text('Dark Mode'); // Change button text
+                }
+            }
+
+            // Check localStorage for saved theme preference
+            let currentTheme = localStorage.getItem('theme');
+
+            // If no saved preference, check prefers-color-scheme
+            if (!currentTheme) {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    currentTheme = 'dark';
+                } else {
+                    currentTheme = 'light'; // Default to light
+                }
+            }
+            
+            applyTheme(currentTheme);
+
+            darkModeToggle.on('click', function() {
+                body.toggleClass('dark-mode');
+                if (body.hasClass('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                    darkModeToggle.text('Light Mode');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    darkModeToggle.text('Dark Mode');
+                }
+            });
+
+            // Listen for changes in system preference
+            if (window.matchMedia) { //Check if matchMedia is supported
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+                    const newColorScheme = event.matches ? 'dark' : 'light';
+                    // Apply system preference, potentially overriding localStorage if user hasn't manually toggled
+                    // For simplicity here, we'll let the new system preference dictate the theme,
+                    // and update localStorage as well.
+                    localStorage.setItem('theme', newColorScheme);
+                    applyTheme(newColorScheme);
+                });
+            }
+
             $('#submit-btn').on('click', function() {
                 const symptoms = $('#symptoms').val().trim();
 
@@ -174,9 +340,142 @@
             });
 
             function formatResponse(rawText) {
-                // Convert the raw response text into a cleaner format
-                let formattedText = rawText.replace(/(?:\r\n|\r|\n)/g, '<br>');
-                return formattedText;
+                let htmlOutput = '';
+                const lines = rawText.split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0);
+
+                const sectionKeywords = {
+                    diseases: ["potential diseases", "health conditions", "possible conditions"],
+                    remedies: ["herbal medicines", "herbal remedies", "plant-based remedies", "suggestions", "recommendations"],
+                    avoid: ["things to avoid", "avoid", "precautions", "be careful with", "important considerations"]
+                };
+
+                // Heuristic: if the text is very short, just format as paragraphs.
+                if (lines.length < 3 && !lines.some(line => sectionKeywords.remedies.some(kw => line.toLowerCase().includes(kw)) || sectionKeywords.avoid.some(kw => line.toLowerCase().includes(kw)) )) {
+                    return lines.map(line => `<p>${line}</p>`).join('');
+                }
+                
+                let currentSectionType = null;
+                let sectionContentAccumulator = []; // Accumulates lines for the current section
+
+                function processAccumulatedSection(type, contentLines) {
+                    if (contentLines.length === 0) return '';
+                    
+                    let sectionHtml = '';
+                    let title = '';
+                    let actualContentLines = [...contentLines]; // Use a copy
+
+                    // Check if the first line of content IS a keyword/title
+                    const firstLineLower = actualContentLines[0].toLowerCase();
+                    let titleTakenFromFirstLine = false;
+
+                    if (type) { // type is like 'diseases', 'remedies'
+                        // Use a keyword if the first line starts with it
+                        for (const keyType in sectionKeywords) {
+                            if (sectionKeywords[keyType].some(kw => firstLineLower.startsWith(kw))) {
+                                title = actualContentLines.shift().replace(/:$/, ''); // Use it as title and remove
+                                titleTakenFromFirstLine = true;
+                                break;
+                            }
+                        }
+                        // If no keyword matched the first line, use a generic title for the type
+                        if (!titleTakenFromFirstLine) {
+                             title = type.charAt(0).toUpperCase() + type.slice(1);
+                        }
+                    } else if (actualContentLines.length > 0) { // No type, but content exists (general intro)
+                        // If the first line is short and ends with a colon, assume it's a title
+                        if (actualContentLines[0].length < 50 && actualContentLines[0].endsWith(':')) {
+                            title = actualContentLines.shift().replace(/:$/, '');
+                        } else {
+                            // No explicit title, so no <h4> for this general block
+                        }
+                    }
+
+                    if (title) {
+                        sectionHtml += `<h4>${title.charAt(0).toUpperCase() + title.slice(1)}</h4>`;
+                    }
+
+                    let listItems = [];
+                    let paragraphs = [];
+
+                    for (let i = 0; i < actualContentLines.length; i++) {
+                        let line = actualContentLines[i];
+                        if (line.match(/^(\*|-|\d+\.?)\s+/)) {
+                            if (paragraphs.length > 0) {
+                                sectionHtml += `<p>${paragraphs.join(' ')}</p>`;
+                                paragraphs = [];
+                            }
+                            listItems.push(`<li>${line.replace(/^(\*|-|\d+\.?)\s+/, '')}</li>`);
+                        } else if (line.length > 0) {
+                            if (listItems.length > 0) {
+                                sectionHtml += `<ul>${listItems.join('')}</ul>`;
+                                listItems = [];
+                            }
+                            paragraphs.push(line);
+                        }
+                    }
+
+                    if (listItems.length > 0) {
+                        sectionHtml += `<ul>${listItems.join('')}</ul>`;
+                    }
+                    if (paragraphs.length > 0) {
+                        sectionHtml += `<p>${paragraphs.join(' ')}</p>`;
+                    }
+                    return sectionHtml;
+                }
+
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+                    const lineLowerCase = line.toLowerCase();
+                    let isNewSectionHeader = false;
+
+                    for (const type in sectionKeywords) {
+                        if (sectionKeywords[type].some(keyword => lineLowerCase.startsWith(keyword))) {
+                            // Found a new section keyword. Process the accumulated content for the *previous* section.
+                            if (sectionContentAccumulator.length > 0) {
+                                htmlOutput += processAccumulatedSection(currentSectionType, sectionContentAccumulator);
+                            }
+                            currentSectionType = type; // Set new section type
+                            sectionContentAccumulator = [line]; // Start new accumulator with the header line
+                            isNewSectionHeader = true;
+                            break;
+                        }
+                    }
+
+                    if (!isNewSectionHeader) {
+                        if (!currentSectionType && sectionContentAccumulator.length === 0 && i < 2) { 
+                            // Attempt to make lines before any known sections part of a "general" or intro section
+                            // Or if it seems like a title itself
+                             if (line.length < 50 && line.endsWith(':') && lines.length > i+1 && lines[i+1].match(/^(\*|-|\d+\.?)\s+/)) {
+                                // This line looks like a title for a list that follows
+                                if (sectionContentAccumulator.length > 0) { // process previous general content
+                                    htmlOutput += processAccumulatedSection(null, sectionContentAccumulator);
+                                    sectionContentAccumulator = [];
+                                }
+                                currentSectionType = line.replace(/:$/, ''); // Use line as type/title
+                                sectionContentAccumulator.push(line); // Add title line
+                             } else {
+                                 sectionContentAccumulator.push(line);
+                             }
+                        } else {
+                             sectionContentAccumulator.push(line);
+                        }
+                    }
+                }
+                
+                // Process any remaining accumulated content for the last section
+                if (sectionContentAccumulator.length > 0) {
+                    htmlOutput += processAccumulatedSection(currentSectionType, sectionContentAccumulator);
+                }
+
+                // Final fallback if HTML output is still empty (e.g. only empty lines in rawText)
+                if (htmlOutput.trim() === '' && rawText.trim().length > 0) {
+                    return `<p>${rawText.replace(/(?:\r\n|\r|\n)+/g, '<br>')}</p>`; // Basic formatting
+                }
+                 if (htmlOutput.trim() === '') { // If all lines were filtered out and nothing processed
+                    return '<p>No specific recommendations found based on the input.</p>';
+                }
+
+                return htmlOutput;
             }
         });
     </script>
