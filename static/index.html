@@ -32,10 +32,8 @@
         .header-container {
             position: fixed;
             top: 0;
-            left: 0;
             right: 0;
             padding: 10px;
-            background: inherit;
             z-index: 1000;
             display: flex;
             justify-content: flex-end;
@@ -164,18 +162,23 @@
 
         /* Dark Mode Toggle Button Styling */
         #dark-mode-toggle {
-            padding: 8px 16px;
+            width: 40px;
+            height: 40px;
             background-color: #004d40;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 50%;
             cursor: pointer;
-            font-size: 0.9em;
+            font-size: 0.7em;
             transition: background-color 0.3s ease;
             z-index: 1000;
-            position: sticky; /* Change to sticky positioning */
-            margin-left: auto; /* Push to right */
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            padding: 0;
+            text-align: center;
+            line-height: 1;
         }
 
         #dark-mode-toggle:hover {
@@ -269,7 +272,7 @@
                 min-height: 100px;
             }
 
-            button {
+            button#submit-btn {
                 width: 100%;
                 padding: 15px;
                 font-size: 1em;
@@ -283,12 +286,14 @@
             .response h4 {
                 font-size: 1.2em;
             }
-
+            
             #dark-mode-toggle {
+                width: 36px;
+                height: 36px;
+                font-size: 0.65em;
                 top: 10px;
                 right: 10px;
-                padding: 7px 14px;
-                font-size: 0.85em;
+                position: fixed;
             }
         }
 
@@ -310,7 +315,7 @@
                 min-height: 80px;
             }
 
-            button {
+            button#submit-btn {
                 padding: 12px;
                 font-size: 0.95em;
             }
@@ -323,19 +328,20 @@
             .response h4 {
                 font-size: 1.1em;
             }
-
+            
             #dark-mode-toggle {
+                width: 32px;
+                height: 32px;
+                font-size: 0.6em;
                 top: 8px;
                 right: 8px;
-                padding: 6px 12px;
-                font-size: 0.8em;
             }
         }
     </style>
 </head>
 <body>
     <div class="header-container">
-        <button id="dark-mode-toggle">Dark Mode</button>
+        <button id="dark-mode-toggle">🌓</button>
     </div>
     <div class="container">
         <h1>Herbal Remedy Assistant</h1>
@@ -355,10 +361,10 @@
             function applyTheme(theme) {
                 if (theme === 'dark') {
                     body.addClass('dark-mode');
-                    darkModeToggle.text('Light Mode');
+                    darkModeToggle.html('🌞');
                 } else {
                     body.removeClass('dark-mode');
-                    darkModeToggle.text('Dark Mode');
+                    darkModeToggle.html('🌓');
                 }
             }
 
@@ -380,10 +386,10 @@
                 body.toggleClass('dark-mode');
                 if (body.hasClass('dark-mode')) {
                     localStorage.setItem('theme', 'dark');
-                    darkModeToggle.text('Light Mode');
+                    darkModeToggle.html('🌞');
                 } else {
                     localStorage.setItem('theme', 'light');
-                    darkModeToggle.text('Dark Mode');
+                    darkModeToggle.html('🌓');
                 }
             });
 
