@@ -21,13 +21,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition for theme change */
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative; /* For positioning the toggle button */
         }
 
         /* Container for the Form */
         .container {
-            position: relative; /* For positioning the toggle button */
             background-color: #ffffff;
             padding: 30px;
             border-radius: 8px;
@@ -39,7 +39,7 @@
 
         /* Form Heading */
         h1 {
-            color: #00796b; /* Dark teal color for headings */
+            color: #00796b;
             margin-bottom: 20px;
             font-size: 2.2em;
             font-weight: 600;
@@ -49,6 +49,8 @@
         label {
             font-size: 1.1em;
             color: #555;
+            display: block;
+            margin-bottom: 10px;
         }
 
         /* Textarea for Symptoms */
@@ -58,21 +60,21 @@
             font-size: 16px;
             border-radius: 6px;
             border: 2px solid #ccc;
-            margin-top: 10px;
             margin-bottom: 20px;
             transition: border-color 0.3s ease;
             resize: none;
+            min-height: 120px;
         }
 
         textarea:focus {
-            border-color: #00796b; /* Dark teal focus color */
+            border-color: #00796b;
             outline: none;
         }
 
         /* Button Styling */
         button {
             padding: 12px 25px;
-            background-color: #00796b; /* Dark teal button */
+            background-color: #00796b;
             color: white;
             border: none;
             border-radius: 6px;
@@ -82,7 +84,7 @@
         }
 
         button:hover {
-            background-color: #004d40; /* Darker teal on hover */
+            background-color: #004d40;
             transform: translateY(-2px);
         }
 
@@ -98,16 +100,41 @@
         .response {
             margin-top: 20px;
             padding: 20px;
-            background-color: #e8f5e9; /* Light green background for response */
-            border-left: 5px solid #4caf50; /* Green accent on the side */
+            background-color: #e8f5e9;
+            border-left: 5px solid #4caf50;
             display: none;
             border-radius: 4px;
             text-align: left;
+            line-height: 1.6;
+            font-size: 1em;
+        }
+
+        .response h4 {
+            color: #00695c;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .response p {
+            margin-bottom: 12px;
+            color: #333;
+        }
+
+        .response ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        .response li {
+            margin-bottom: 8px;
+            color: #333;
         }
 
         .response strong {
-            font-size: 1.2em;
-            color: #00695c; /* Deep teal for strong tags */
+            color: #00695c;
+            font-weight: 600;
         }
 
         /* Animation */
@@ -120,64 +147,24 @@
             to { opacity: 1; }
         }
 
-        /* Responsive Design */
-        @media only screen and (max-width: 768px) {
-            body { 
-                padding: 20px; 
-            }
-            .container {
-                padding: 20px; /* Adjusted padding for smaller screens */
-            }
-            h1 { 
-                font-size: 1.8em; 
-            }
-            label {
-                font-size: 1em; /* Adjusted font size for labels */
-            }
-            textarea {
-                font-size: 15px; /* Adjusted font size for textarea */
-                min-height: 100px; /* Ensure textarea doesn't get too small */
-            }
-            button { 
-                width: 100%; 
-                padding: 15px; 
-                font-size: 1em; /* Adjusted font size for button */
-            }
-            .response {
-                padding: 15px; /* Adjusted padding for response box */
-                font-size: 0.95em; /* Adjusted font size for response text */
-            }
-            .response strong {
-                font-size: 1.1em; /* Adjusted font size for strong tags in response */
-            }
+        /* Dark Mode Toggle Button Styling */
+        #dark-mode-toggle {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            padding: 8px 16px;
+            background-color: #004d40;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+            z-index: 1000; /* Ensure it's above other elements */
         }
 
-        /* Additional adjustments for very small screens */
-        @media only screen and (max-width: 480px) {
-            body {
-                padding: 15px; /* Further reduce body padding */
-            }
-            .container {
-                padding: 15px; /* Further reduce container padding */
-            }
-            h1 {
-                font-size: 1.6em; /* Further reduce heading font size */
-            }
-            textarea {
-                font-size: 14px; /* Further reduce textarea font size */
-                min-height: 80px; /* Adjust min-height for very small screens */
-            }
-            button {
-                padding: 12px; /* Adjust button padding */
-                font-size: 0.95em; /* Adjust button font size */
-            }
-            .response {
-                padding: 10px; /* Further reduce response box padding */
-                font-size: 0.9em; /* Further reduce response text font size */
-            }
-            .response strong {
-                font-size: 1em; /* Adjust strong tag font size in response */
-            }
+        #dark-mode-toggle:hover {
+            background-color: #00332a;
         }
 
         /* Dark Mode Styles */
@@ -185,73 +172,160 @@
             background-color: #121212;
             color: #e0e0e0;
         }
+
         .dark-mode .container {
             background-color: #1e1e1e;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Darker shadow */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         }
+
         .dark-mode h1 {
-            color: #1976d2; /* A lighter, vibrant color for heading in dark mode */
+            color: #64b5f6;
         }
+
         .dark-mode label {
             color: #b0b0b0;
         }
+
         .dark-mode textarea {
             background-color: #2c2c2c;
             color: #e0e0e0;
             border-color: #555;
         }
+
         .dark-mode textarea:focus {
-            border-color: #1976d2;
+            border-color: #64b5f6;
         }
-        .dark-mode button#submit-btn { /* More specific selector for submit button */
+
+        .dark-mode button#submit-btn {
             background-color: #1976d2;
-            color: white;
         }
+
         .dark-mode button#submit-btn:hover {
-            background-color: #155a9e;
+            background-color: #1565c0;
         }
+
+        .dark-mode #dark-mode-toggle {
+            background-color: #555;
+        }
+
+        .dark-mode #dark-mode-toggle:hover {
+            background-color: #444;
+        }
+
         .dark-mode .response {
             background-color: #2c2c2c;
-            border-left-color: #1976d2;
-            color: #e0e0e0;
-        }
-        .dark-mode .response strong {
-            color: #64b5f6; /* Lighter shade for strong tags */
-        }
-        
-        /* Dark Mode Toggle Button Styling */
-        #dark-mode-toggle {
-            position: absolute;
-            top: 20px; /* Adjusted for better spacing */
-            right: 20px; /* Adjusted for better spacing */
-            padding: 8px 12px;
-            background-color: #004d40; 
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9em;
-            z-index: 1000; /* Ensure it's above other elements */
-        }
-        .dark-mode #dark-mode-toggle {
-            background-color: #555; 
+            border-left-color: #64b5f6;
             color: #e0e0e0;
         }
 
+        .dark-mode .response h4 {
+            color: #64b5f6;
+        }
+
+        .dark-mode .response p,
+        .dark-mode .response li {
+            color: #e0e0e0;
+        }
+
+        .dark-mode .response strong {
+            color: #90caf9;
+        }
+
+        /* Responsive Design */
+        @media only screen and (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            label {
+                font-size: 1em;
+            }
+
+            textarea {
+                font-size: 15px;
+                min-height: 100px;
+            }
+
+            button {
+                width: 100%;
+                padding: 15px;
+                font-size: 1em;
+            }
+
+            .response {
+                padding: 15px;
+                font-size: 0.95em;
+            }
+
+            .response h4 {
+                font-size: 1.2em;
+            }
+
+            #dark-mode-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 7px 14px;
+                font-size: 0.85em;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+
+            textarea {
+                font-size: 14px;
+                min-height: 80px;
+            }
+
+            button {
+                padding: 12px;
+                font-size: 0.95em;
+            }
+
+            .response {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+
+            .response h4 {
+                font-size: 1.1em;
+            }
+
+            #dark-mode-toggle {
+                top: 8px;
+                right: 8px;
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+        }
     </style>
 </head>
 <body>
-
+    <button id="dark-mode-toggle">Dark Mode</button>
     <div class="container">
-        <button id="dark-mode-toggle">Dark Mode</button>
         <h1>Herbal Remedy Assistant</h1>
-
         <label for="symptoms">Enter your symptoms (comma-separated):</label>
         <textarea id="symptoms" placeholder="e.g., headache, fatigue, cough"></textarea>
-
         <button id="submit-btn">Get Remedy</button>
         <div class="loading">Processing your symptoms...</div>
-
         <div id="response" class="response"></div>
     </div>
 
@@ -264,10 +338,10 @@
             function applyTheme(theme) {
                 if (theme === 'dark') {
                     body.addClass('dark-mode');
-                    darkModeToggle.text('Light Mode'); // Change button text
+                    darkModeToggle.text('Light Mode');
                 } else {
                     body.removeClass('dark-mode');
-                    darkModeToggle.text('Dark Mode'); // Change button text
+                    darkModeToggle.text('Dark Mode');
                 }
             }
 
@@ -279,7 +353,7 @@
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                     currentTheme = 'dark';
                 } else {
-                    currentTheme = 'light'; // Default to light
+                    currentTheme = 'light';
                 }
             }
             
@@ -297,12 +371,9 @@
             });
 
             // Listen for changes in system preference
-            if (window.matchMedia) { //Check if matchMedia is supported
+            if (window.matchMedia) {
                 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
                     const newColorScheme = event.matches ? 'dark' : 'light';
-                    // Apply system preference, potentially overriding localStorage if user hasn't manually toggled
-                    // For simplicity here, we'll let the new system preference dictate the theme,
-                    // and update localStorage as well.
                     localStorage.setItem('theme', newColorScheme);
                     applyTheme(newColorScheme);
                 });
@@ -328,7 +399,6 @@
                     contentType: 'application/json',
                     data: JSON.stringify({ symptoms: symptoms }),
                     success: function(response) {
-                        // Hide loading and show the response
                         $('.loading').hide();
                         $('#response').html(formatResponse(response.response)).fadeIn().addClass('fade-in');
                     },
@@ -349,44 +419,37 @@
                     avoid: ["things to avoid", "avoid", "precautions", "be careful with", "important considerations"]
                 };
 
-                // Heuristic: if the text is very short, just format as paragraphs.
-                if (lines.length < 3 && !lines.some(line => sectionKeywords.remedies.some(kw => line.toLowerCase().includes(kw)) || sectionKeywords.avoid.some(kw => line.toLowerCase().includes(kw)) )) {
+                if (lines.length < 3 && !lines.some(line => sectionKeywords.remedies.some(kw => line.toLowerCase().includes(kw)) || sectionKeywords.avoid.some(kw => line.toLowerCase().includes(kw)))) {
                     return lines.map(line => `<p>${line}</p>`).join('');
                 }
                 
                 let currentSectionType = null;
-                let sectionContentAccumulator = []; // Accumulates lines for the current section
+                let sectionContentAccumulator = [];
 
                 function processAccumulatedSection(type, contentLines) {
                     if (contentLines.length === 0) return '';
                     
                     let sectionHtml = '';
                     let title = '';
-                    let actualContentLines = [...contentLines]; // Use a copy
+                    let actualContentLines = [...contentLines];
 
-                    // Check if the first line of content IS a keyword/title
                     const firstLineLower = actualContentLines[0].toLowerCase();
                     let titleTakenFromFirstLine = false;
 
-                    if (type) { // type is like 'diseases', 'remedies'
-                        // Use a keyword if the first line starts with it
+                    if (type) {
                         for (const keyType in sectionKeywords) {
                             if (sectionKeywords[keyType].some(kw => firstLineLower.startsWith(kw))) {
-                                title = actualContentLines.shift().replace(/:$/, ''); // Use it as title and remove
+                                title = actualContentLines.shift().replace(/:$/, '');
                                 titleTakenFromFirstLine = true;
                                 break;
                             }
                         }
-                        // If no keyword matched the first line, use a generic title for the type
                         if (!titleTakenFromFirstLine) {
-                             title = type.charAt(0).toUpperCase() + type.slice(1);
+                            title = type.charAt(0).toUpperCase() + type.slice(1);
                         }
-                    } else if (actualContentLines.length > 0) { // No type, but content exists (general intro)
-                        // If the first line is short and ends with a colon, assume it's a title
+                    } else if (actualContentLines.length > 0) {
                         if (actualContentLines[0].length < 50 && actualContentLines[0].endsWith(':')) {
                             title = actualContentLines.shift().replace(/:$/, '');
-                        } else {
-                            // No explicit title, so no <h4> for this general block
                         }
                     }
 
@@ -430,48 +493,42 @@
 
                     for (const type in sectionKeywords) {
                         if (sectionKeywords[type].some(keyword => lineLowerCase.startsWith(keyword))) {
-                            // Found a new section keyword. Process the accumulated content for the *previous* section.
                             if (sectionContentAccumulator.length > 0) {
                                 htmlOutput += processAccumulatedSection(currentSectionType, sectionContentAccumulator);
                             }
-                            currentSectionType = type; // Set new section type
-                            sectionContentAccumulator = [line]; // Start new accumulator with the header line
+                            currentSectionType = type;
+                            sectionContentAccumulator = [line];
                             isNewSectionHeader = true;
                             break;
                         }
                     }
 
                     if (!isNewSectionHeader) {
-                        if (!currentSectionType && sectionContentAccumulator.length === 0 && i < 2) { 
-                            // Attempt to make lines before any known sections part of a "general" or intro section
-                            // Or if it seems like a title itself
-                             if (line.length < 50 && line.endsWith(':') && lines.length > i+1 && lines[i+1].match(/^(\*|-|\d+\.?)\s+/)) {
-                                // This line looks like a title for a list that follows
-                                if (sectionContentAccumulator.length > 0) { // process previous general content
+                        if (!currentSectionType && sectionContentAccumulator.length === 0 && i < 2) {
+                            if (line.length < 50 && line.endsWith(':') && lines.length > i+1 && lines[i+1].match(/^(\*|-|\d+\.?)\s+/)) {
+                                if (sectionContentAccumulator.length > 0) {
                                     htmlOutput += processAccumulatedSection(null, sectionContentAccumulator);
                                     sectionContentAccumulator = [];
                                 }
-                                currentSectionType = line.replace(/:$/, ''); // Use line as type/title
-                                sectionContentAccumulator.push(line); // Add title line
-                             } else {
-                                 sectionContentAccumulator.push(line);
-                             }
+                                currentSectionType = line.replace(/:$/, '');
+                                sectionContentAccumulator.push(line);
+                            } else {
+                                sectionContentAccumulator.push(line);
+                            }
                         } else {
-                             sectionContentAccumulator.push(line);
+                            sectionContentAccumulator.push(line);
                         }
                     }
                 }
-                
-                // Process any remaining accumulated content for the last section
+
                 if (sectionContentAccumulator.length > 0) {
                     htmlOutput += processAccumulatedSection(currentSectionType, sectionContentAccumulator);
                 }
 
-                // Final fallback if HTML output is still empty (e.g. only empty lines in rawText)
                 if (htmlOutput.trim() === '' && rawText.trim().length > 0) {
-                    return `<p>${rawText.replace(/(?:\r\n|\r|\n)+/g, '<br>')}</p>`; // Basic formatting
+                    return `<p>${rawText.replace(/(?:\r\n|\r|\n)+/g, '<br>')}</p>`;
                 }
-                 if (htmlOutput.trim() === '') { // If all lines were filtered out and nothing processed
+                if (htmlOutput.trim() === '') {
                     return '<p>No specific recommendations found based on the input.</p>';
                 }
 
@@ -479,6 +536,5 @@
             }
         });
     </script>
-
 </body>
 </html>
