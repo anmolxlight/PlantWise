@@ -18,12 +18,27 @@
             background-color: #61AA78; /* Subtle green-blue background */
             color: #333;
             padding: 40px;
+            padding-top: 60px; /* Add padding for header */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             transition: background-color 0.3s ease, color 0.3s ease;
-            position: relative; /* For positioning the toggle button */
+            position: relative;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Header Container */
+        .header-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 10px;
+            background: inherit;
+            z-index: 1000;
+            display: flex;
+            justify-content: flex-end;
         }
 
         /* Container for the Form */
@@ -149,9 +164,6 @@
 
         /* Dark Mode Toggle Button Styling */
         #dark-mode-toggle {
-            position: fixed;
-            top: 15px;
-            right: 15px;
             padding: 8px 16px;
             background-color: #004d40;
             color: white;
@@ -160,7 +172,10 @@
             cursor: pointer;
             font-size: 0.9em;
             transition: background-color 0.3s ease;
-            z-index: 1000; /* Ensure it's above other elements */
+            z-index: 1000;
+            position: sticky; /* Change to sticky positioning */
+            margin-left: auto; /* Push to right */
+            display: block;
         }
 
         #dark-mode-toggle:hover {
@@ -319,7 +334,9 @@
     </style>
 </head>
 <body>
-    <button id="dark-mode-toggle">Dark Mode</button>
+    <div class="header-container">
+        <button id="dark-mode-toggle">Dark Mode</button>
+    </div>
     <div class="container">
         <h1>Herbal Remedy Assistant</h1>
         <label for="symptoms">Enter your symptoms (comma-separated):</label>
