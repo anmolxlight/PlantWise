@@ -1,57 +1,117 @@
-# PlantWise: AI-Powered Plant Medicine Advisor
+# PlantWise 🌱
 
-## About
-PlantWise is an AI-powered application developed as a module for Smart India Hackathon (SIH) 2024. This tool helps users identify potential natural remedies for various health symptoms based on traditional herbal and Ayurvedic medicine knowledge.
+**AI-Powered Herbal Medicine Advisor**
 
-**Website:** [https://sites.google.com/view/plantwise/virtual-garden](https://sites.google.com/view/plantwise/vitrual-garden?authuser=0)
+PlantWise is an AI-powered application developed for Smart India Hackathon (SIH) 2024. Describe your symptoms and get plant-based remedy suggestions rooted in traditional herbal and Ayurvedic medicine knowledge.
 
-The application processes user-reported symptoms, analyzes them using AI, and provides tailored plant-based remedy suggestions while also warning about things to avoid for the identified health conditions.
+**Live demo:** [plantwisebackend.onrender.com](https://plantwisebackend.onrender.com)
+
+---
 
 ## Features
--   **Symptom Analysis**: Users can input their health symptoms in natural language.
--   **AI-Powered Recommendations**: Utilizes Google's Gemini AI to analyze symptoms and suggest remedies.
--   **Plant-Based Solutions**: Focuses on traditional herbal and Ayurvedic treatments.
--   **Precautionary Advice**: Includes things to avoid for better health outcomes.
+
+- **Symptom Analysis** — Input your symptoms in natural language
+- **AI-Powered Recommendations** — Google Gemini 2.5 Flash analyzes symptoms and suggests remedies
+- **Plant-Based Solutions** — Traditional herbal and Ayurvedic treatments
+- **Precautionary Advice** — Includes things to avoid for better outcomes
+- **Dark/Light Mode** — Automatic system preference detection with manual toggle
+- **Mobile Responsive** — Works on all screen sizes
 
 ## Tech Stack
--   **Backend**: Python with Flask
--   **AI**: Google Gemini 2.0 Flash model
--   **Frontend**: HTML, CSS
 
-## Setup Instructions
+| Layer   | Technology                              |
+| ------- | --------------------------------------- |
+| Backend | Python 3.10+ · Flask 3.1                |
+| AI      | Google Gemini 2.5 Flash API             |
+| Frontend | HTML5 · CSS3 (custom properties) · Vanilla JS |
+| Hosting | Render (backend) · GitHub Pages / Render (frontend) |
+
+## Setup
+
+### Prerequisites
+- Python 3.10 or later
+- A [Google Gemini API key](https://aistudio.google.com/app/apikey)
 
 ### Local Development
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/anmolxlight/PlantWise](https://github.com/anmolxlight/PlantWise)
-    cd PlantWise
-    ```
+```bash
+# 1. Clone
+git clone https://github.com/anmolxlight/PlantWise.git
+cd PlantWise
 
-2.  **Install the required dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+# 2. Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Linux/macOS
+# venv\Scripts\activate   # Windows
 
-3.  **Create a `.env` file:**
-    Create a `.env` file in the root directory by copying the `env.example` file:
-    ```bash
-    # On Windows
-    copy env.example .env
-    
-    # On Mac/Linux
-    cp env.example .env
-    ```
-    Alternatively, you can create it manually with the following content:
-    ```
-    GEMINI_API_KEY=your_api_key_here
-    ```
-    **Important:** Replace `your_api_key_here` with your actual Google Gemini API key. You can obtain an API key from [Google AI Studio](https://aistudio.google.com/app/apikey) or the Google Cloud Console.
+# 3. Install dependencies
+pip install -r requirements.txt
 
-4.  **Run the application:**
-    ```bash
-    python app.py
-    ```
+# 4. Configure API key
+cp .env.example .env
+# Edit .env and set your GEMINI_API_KEY
 
-5.  **Access the application:**
-    Open your web browser and navigate to `http://localhost:5000`.
+# 5. Run
+python app.py
+
+# 6. Open http://localhost:5000
+```
+
+### Environment Variables
+
+| Variable        | Required | Description                  |
+| --------------- | -------- | ---------------------------- |
+| `GEMINI_API_KEY` | Yes      | Google Gemini API key        |
+| `PORT`          | No       | Server port (default: 5000)  |
+| `FLASK_DEBUG`   | No       | Set to `1` for debug mode    |
+
+## API
+
+### `POST /get_remedy`
+
+Analyze symptoms and get herbal remedy suggestions.
+
+**Request:**
+```json
+{ "symptoms": "headache, fatigue, cough" }
+```
+
+**Response:**
+```json
+{
+  "response": "Possible Conditions\n...\nHerbal Remedies\n...\nThings to Avoid\n..."
+}
+```
+
+### `GET /health`
+
+Health check endpoint.
+
+## Deployment
+
+The app is designed for [Render](https://render.com). Use the following settings:
+
+- **Runtime:** Python 3
+- **Build Command:** `pip install -r requirements.txt`
+- **Start Command:** `gunicorn app:app`
+
+## Project Structure
+
+```
+PlantWise/
+├── app.py               # Flask backend
+├── requirements.txt     # Python dependencies
+├── .env.example         # Environment variable template
+├── static/
+│   ├── index.html       # Frontend (single-page app)
+│   └── robots.txt       # Crawler rules
+└── README.md
+```
+
+## Disclaimer
+
+This application is for informational purposes only. The herbal remedies suggested are based on traditional knowledge and AI analysis. Always consult a qualified healthcare professional before trying any treatment. Never disregard professional medical advice or delay in seeking it based on information from this app.
+
+## License
+
+MIT

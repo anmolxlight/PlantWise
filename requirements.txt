@@ -1,8 +1,5 @@
-Flask
-gunicorn
-Flask-Cors
-openai
-google-generativeai
-requests
-cohere
-python-dotenv
+Flask>=3.1.0,<4.0
+Flask-Cors>=6.0.0,<7.0
+gunicorn>=26.0.0,<27.0
+python-dotenv>=1.0.0,<2.0
+requests>=2.32.0,<3.0
