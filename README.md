@@ -89,7 +89,11 @@ Health check endpoint.
 
 ## Deployment
 
-The app is designed for [Render](https://render.com). Use the following settings:
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/anmolxlight/PlantWise)
+
+The app is hosted on [Render](https://render.com) and can be deployed with one click using the button above.
+
+Alternatively, use the following manual settings:
 
 - **Runtime:** Python 3
 - **Build Command:** `pip install -r requirements.txt`
